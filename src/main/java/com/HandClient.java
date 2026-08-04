@@ -179,24 +179,21 @@ public class HandClient {
                     case "INFO" -> {
                         Server.totalCommands.incrementAndGet();
 
-                        // 1. Считаем аптайм (время работы в секундах)
+                        
                         long uptimeSeconds = (System.currentTimeMillis() - Server.startTime) / 1000;
 
-                        // 2. Получаем значения счетчиков
                         long totalCmds = Server.totalCommands.get();
                         long hits = Server.cacheHits.get();
                         long misses = Server.cacheMisses.get();
                         int dbSize = Server.map.size();
                         int clients = Server.connectedClients.get();
 
-                        // 3. Считаем процент попаданий в кэш (Hit Rate)
-                        // ВАЖНО: защита от деления на ноль, если GET еще не вызывался
                         double hitRate = 0.0;
                         if ((hits + misses) > 0) {
                             hitRate = ((double) hits / (hits + misses)) * 100.0;
                         }
 
-                        // 4. Формируем красивый отчет
+                        
                         StringBuilder info = new StringBuilder();
                         info.append(" === СТАТИСТИКА СЕРВЕРА ===\n");
                         info.append(String.format(" Время работы: %d сек.\n", uptimeSeconds));
